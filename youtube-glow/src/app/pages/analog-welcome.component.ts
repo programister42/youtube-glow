@@ -1,7 +1,15 @@
 import { Component } from '@angular/core';
-import { AsyncPipe, DatePipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { shareReplay, Subject, switchMap, take } from 'rxjs';
+import {
+	debounceTime,
+	distinctUntilChanged,
+	shareReplay,
+	Subject,
+	switchMap,
+	take,
+	tap,
+} from 'rxjs';
 import { waitFor } from '@analogjs/trpc';
 import { injectTrpcClient } from '../../trpc-client';
 import { Note } from '../../note';
@@ -10,7 +18,15 @@ import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 @Component({
 	selector: 'youtube-glow-analog-welcome',
 	standalone: true,
-	imports: [AsyncPipe, FormsModule, NgFor, DatePipe, NgIf, HlmInputDirective],
+	imports: [
+		AsyncPipe,
+		FormsModule,
+		NgFor,
+		DatePipe,
+		NgIf,
+		JsonPipe,
+		HlmInputDirective,
+	],
 	host: {
 		class:
 			'flex min-h-screen flex-col text-zinc-900 bg-zinc-50 px-4 pt-8 pb-32',
@@ -19,7 +35,18 @@ import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 		<main class="flex-1 mx-auto">
 			<section class="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
 				<div class="flex max-w-[64rem] flex-col items-center gap-4 text-center">
-					<input hlmInput placeholder="Search videos" />
+					<input
+						hlmInput
+						placeholder="Search videos"
+						(input)="onSearchChange($event)"
+					/>
+
+					@let videos = videos$ | async;
+
+					@for (video of videos; track video.id) {
+						<p>{{ video.snippet?.title }}</p>
+					}
+
 					<img
 						class="h-12 w-12"
 						src="https://analogjs.org/img/logos/analog-logo.svg"
@@ -126,7 +153,24 @@ import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 })
 export class AnalogWelcomeComponent {
 	private _trpc = injectTrpcClient();
+
+	public videoQuery = new Subject<string>();
+
+	public videos$ = this.videoQuery.pipe(
+		debounceTime(300),
+		distinctUntilChanged(),
+		tap(console.log),
+		switchMap((q) => this._trpc.youtube.search.query({ q, maxResults: 3 })),
+	);
+
+	public onSearchChange(e: Event) {
+		const target = e.target as HTMLInputElement;
+		const value = target.value;
+		this.videoQuery.next(value);
+	}
+
 	public triggerRefresh$ = new Subject<void>();
+
 	public notes$ = this.triggerRefresh$.pipe(
 		switchMap(() => this._trpc.note.list.query()),
 		shareReplay(1),

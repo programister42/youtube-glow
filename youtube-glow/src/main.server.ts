@@ -1,3 +1,5 @@
+import 'env.server.ts';
+
 import 'zone.js/node';
 import '@angular/platform-server/init';
 import { enableProdMode } from '@angular/core';
