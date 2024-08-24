@@ -1,8 +1,8 @@
 /// <reference types="vitest" />
 
-import analog from "@analogjs/platform";
-import { defineConfig, Plugin, splitVendorChunkPlugin } from "vite";
-import { nxViteTsPaths } from "@nx/vite/plugins/nx-tsconfig-paths.plugin";
+import analog from '@analogjs/platform';
+import { defineConfig, Plugin, splitVendorChunkPlugin } from 'vite';
+import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -11,24 +11,24 @@ export default defineConfig(({ mode }) => {
 		cacheDir: `../node_modules/.vite`,
 
 		ssr: {
-			noExternal: ["@analogjs/trpc", "@trpc/server"],
+			noExternal: ['@analogjs/trpc', '@trpc/server'],
 		},
 
 		build: {
-			outDir: "../dist/./youtube-glow/client",
+			outDir: '../dist/./youtube-glow/client',
 			reportCompressedSize: true,
-			target: ["es2020"],
+			target: ['es2020'],
 		},
 		server: {
 			fs: {
-				allow: ["."],
+				allow: ['.'],
 			},
 		},
 		plugins: [
 			analog({
 				nitro: {
 					routeRules: {
-						"/": {
+						'/': {
 							prerender: false,
 						},
 					},
@@ -40,13 +40,13 @@ export default defineConfig(({ mode }) => {
 		],
 		test: {
 			globals: true,
-			environment: "jsdom",
-			setupFiles: ["src/test-setup.ts"],
-			include: ["**/*.spec.ts"],
-			reporters: ["default"],
+			environment: 'jsdom',
+			setupFiles: ['src/test-setup.ts'],
+			include: ['**/*.spec.ts'],
+			reporters: ['default'],
 		},
 		define: {
-			"import.meta.vitest": mode !== "production",
+			'import.meta.vitest': mode !== 'production',
 		},
 	};
 });
