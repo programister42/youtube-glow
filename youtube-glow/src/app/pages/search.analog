@@ -1,0 +1,45 @@
+<script lang="ts">
+	import { signal } from "@angular/core";
+	// import { HlmInputDirective } from "@spartan-ng/ui-input-helm";
+	import { HlmInputDirective } from "../../../../libs/ui/ui-input-helm/src/index";
+
+	defineMetadata({
+		imports: [HlmInputDirective],
+	});
+
+	const count = signal(0);
+
+	function add() {
+		count.set(count() + 1);
+	}
+
+	function onSearchChange(event: Event) {
+		console.log((event.target as HTMLInputElement).value);
+	}
+</script>
+
+<template>
+	<input
+		hlmInput
+		placeholder="Search videos"
+		(input)="onSearchChange($event)"
+	/>
+	<div class="container">
+		<button (click)="add()">{{count()}}</button>
+	</div>
+</template>
+
+<style>
+	.container {
+		display: flex;
+		justify-content: center;
+	}
+
+	button {
+		font-size: 2rem;
+		padding: 1rem 2rem;
+		border-radius: 0.5rem;
+		background-color: #f0f0f0;
+		border: 1px solid#ccc;
+	}
+</style>

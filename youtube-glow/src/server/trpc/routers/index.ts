@@ -1,6 +1,6 @@
-import { router } from '../trpc';
-import { noteRouter } from './notes';
-import { youtubeRouter } from './youtube';
+import { router } from "../trpc";
+import { noteRouter } from "./notes";
+import { youtubeRouter } from "./youtube";
 
 export const appRouter = router({
 	note: noteRouter,

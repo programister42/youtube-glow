@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { AnalogWelcomeComponent } from './analog-welcome.component';
+import { AnalogWelcomeComponent } from "./analog-welcome.component";
+import Search from "./search.analog";
 
 @Component({
-	selector: 'youtube-glow-home',
+	selector: "youtube-glow-home",
 	standalone: true,
-	imports: [AnalogWelcomeComponent],
-	template: ` <youtube-glow-analog-welcome /> `,
+	imports: [AnalogWelcomeComponent, Search],
+	// template: ` <youtube-glow-analog-welcome /> `,
+	template: ` <Search /> `,
 })
 export default class HomeComponent {}

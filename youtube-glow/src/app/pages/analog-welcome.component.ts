@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { AsyncPipe, DatePipe, JsonPipe, NgFor, NgIf } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component } from "@angular/core";
+import { AsyncPipe, DatePipe, JsonPipe, NgFor, NgIf } from "@angular/common";
+import { FormsModule, NgForm } from "@angular/forms";
 import {
 	debounceTime,
 	distinctUntilChanged,
@@ -9,14 +9,14 @@ import {
 	switchMap,
 	take,
 	tap,
-} from 'rxjs';
-import { waitFor } from '@analogjs/trpc';
-import { injectTrpcClient } from '../../trpc-client';
-import { Note } from '../../note';
-import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
+} from "rxjs";
+import { waitFor } from "@analogjs/trpc";
+import { injectTrpcClient } from "../../trpc-client";
+import { Note } from "../../note";
+import { HlmInputDirective } from "@spartan-ng/ui-input-helm";
 
 @Component({
-	selector: 'youtube-glow-analog-welcome',
+	selector: "youtube-glow-analog-welcome",
 	standalone: true,
 	imports: [
 		AsyncPipe,
@@ -29,7 +29,7 @@ import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 	],
 	host: {
 		class:
-			'flex min-h-screen flex-col text-zinc-900 bg-zinc-50 px-4 pt-8 pb-32',
+			"flex min-h-screen flex-col text-zinc-900 bg-zinc-50 px-4 pt-8 pb-32",
 	},
 	template: `
 		<main class="flex-1 mx-auto">
@@ -175,7 +175,7 @@ export class AnalogWelcomeComponent {
 		switchMap(() => this._trpc.note.list.query()),
 		shareReplay(1),
 	);
-	public newNote = '';
+	public newNote = "";
 
 	constructor() {
 		void waitFor(this.notes$);
@@ -195,7 +195,7 @@ export class AnalogWelcomeComponent {
 			.mutate({ note: this.newNote })
 			.pipe(take(1))
 			.subscribe(() => this.triggerRefresh$.next());
-		this.newNote = '';
+		this.newNote = "";
 		form.form.reset();
 	}
 

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
 
 @Component({
-	selector: 'youtube-glow-root',
+	selector: "youtube-glow-root",
 	standalone: true,
 	imports: [RouterOutlet],
 	template: ` <router-outlet></router-outlet> `,

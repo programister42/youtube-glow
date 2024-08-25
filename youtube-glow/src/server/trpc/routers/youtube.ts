@@ -1,10 +1,10 @@
-import { youtube } from '@googleapis/youtube';
-import { publicProcedure, router } from '../trpc';
-import { z } from 'zod';
+import { youtube } from "@googleapis/youtube";
+import { publicProcedure, router } from "../trpc";
+import { z } from "zod";
 
 const youtubeApi = youtube({
-	version: 'v3',
-	auth: process.env['YOUTUBE_API_KEY'],
+	version: "v3",
+	auth: process.env["YOUTUBE_API_KEY"],
 });
 
 export const youtubeRouter = router({
@@ -18,7 +18,7 @@ export const youtubeRouter = router({
 		.query(async ({ input }) => {
 			const { q, maxResults } = input;
 			const res = await youtubeApi.search.list({
-				part: ['snippet'],
+				part: ["snippet"],
 				q,
 				maxResults,
 			});

@@ -1,3 +1,11 @@
 {
-	"singleQuote": true
+	"singleQuote": false,
+	"overrides": [
+		{
+			"files": "*.analog",
+			"options": {
+				"parser": "html"
+			}
+		}
+	]
 }
